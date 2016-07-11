@@ -1,0 +1,38 @@
+﻿using UnityEngine;
+using System.Collections;
+using UnityEngine.UI;
+
+public enum GameLevel { Level1, Level2, Level3, Level4};
+public class LevelManager : MonoBehaviour {
+
+    public GameLevel currentLevel = GameLevel.Level1;
+    public Item[] itemsList;
+    public int killEnemyNum = 0;
+
+    private Actor player;
+    private Text gameInfo;
+
+	// Use this for initialization
+	void Start () {
+        player = GameObject.FindGameObjectWithTag(Tags.player).GetComponent<Actor>();
+        gameInfo = GameObject.Find("Text").GetComponent<Text>();
+        Debug.Log(player, gameInfo);
+	} 
+	
+	// Update is called once per frame
+	void Update () {
+        if (!player || !gameInfo)
+            return;
+        Debug.Log(player);
+        gameInfo.text = "Kill enemies:" + killEnemyNum + "\n" + "Player health:" + (int)(player.health+0.5) + "\n";
+	}
+
+    public Item GenerateRandomItem(Transform dropper)
+    {
+        int idx = Random.Range(0, itemsList.Length);
+        Item droppedItem = (Item)GameObject.Instantiate(itemsList[idx], dropper.position, Quaternion.identity);
+        droppedItem.SetupRandomPickableItem();
+
+        return droppedItem;
+    }
+}

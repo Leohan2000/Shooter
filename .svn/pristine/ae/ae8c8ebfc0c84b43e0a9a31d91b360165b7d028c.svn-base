@@ -1,0 +1,35 @@
+﻿using UnityEngine;
+using System.Collections;
+
+public enum ItemType { Weapon, Bullet, Intelligence, Power, Speed, Health };
+
+public enum WeaponType { Default, Pistol, Gun, Rocket, Laser };
+
+public class Item : MonoBehaviour {
+    public bool pickable = false;
+    public float rotSpeed = 10.0f;
+    public bool usable = true;
+    public bool isEnemy = false;
+    public float num = 1f;
+
+    public ItemType itemType;
+    public GameLevel level;
+
+	// Update is called once per frame
+	public virtual void Update () {
+        if (pickable)
+            transform.Rotate(Vector3.up, rotSpeed * Time.deltaTime);
+	}
+    public virtual void OnTriggerEnter(Collider other)
+    {
+        if (other.tag != Tags.player || !pickable)
+            return;
+        other.gameObject.GetComponent<PlayerControl>().PickupItem(gameObject);
+        Destroy(gameObject);
+    }
+    virtual public void SetupRandomPickableItem()
+    {
+        pickable = true;
+    }
+
+}

@@ -1,0 +1,16 @@
+﻿using UnityEngine;
+using System.Collections;
+
+public class AutoDestroy : MonoBehaviour {
+    private ParticleSystem ps;
+	// Use this for initialization
+	void Start () {
+        ps = GetComponent<ParticleSystem>();
+        //Debug.Log(ps);
+	}
+	
+	// Update is called once per frame
+	void Update () {
+	
+	}
+}
